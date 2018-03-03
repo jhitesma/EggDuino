@@ -39,11 +39,51 @@
 
 #define servoPin 3 //Servo
 
-// EXTRAFEATURES - UNCOMMENT TO USE THEM -------------------------------------------------------------------
+#define BOARD_RAMPS
+//#define BOARD_ZAGGO
+//#define BOARD_CNCSHIELD
 
-// #define prgButton 2 // PRG button
-// #define penToggleButton 12 // pen up/down button
-// #define motorsButton 4 // motors enable button
+#ifdef BOARD_RAMPS
+  //RAMPS 1.4
+  //Rotational Stepper:
+  #define step1 54
+  #define dir1 55
+  #define enableRotMotor 38
+  #define rotMicrostep 16  //MicrostepMode, only 1,2,4,8,16 allowed, because of Integer-Math in this Sketch
+  //Pen Stepper:
+  #define step2 60
+  #define dir2 61
+  #define enablePenMotor 56
+  #define penMicrostep 16 //MicrostepMode, only 1,2,4,8,16 allowed, because of Integer-Math in this Sketch
+  //Servo
+  #define servoPin 6
+  #define engraverPin 5
+  //Buttons (uncomment to enable)
+  //#define prgButton 2 // PRG button
+  //#define penToggleButton 12 // pen up/down button
+  //#define motorsButton 4 // motors enable button
+#endif
+
+#ifdef BOARD_ZAGGO
+	//Zaggo SphereBot design: http://pleasantsoftware.com/developer/3d/spherebot/
+	//Rotational Stepper:
+	#define step1 11
+	#define dir1 10
+	#define enableRotMotor 9
+	#define rotMicrostep 16  //MicrostepMode, only 1,2,4,8,16 allowed, because of Integer-Math in this Sketch
+	//Pen Stepper:
+	#define step2 8
+	#define dir2 7
+	#define enablePenMotor 6
+	#define penMicrostep 16 //MicrostepMode, only 1,2,4,8,16 allowed, because of Integer-Math in this Sketch
+	//Servo
+	#define servoPin 3
+	#define engraverPin 5
+	//Buttons (uncomment to enable)
+	//#define prgButton 2 // PRG button
+	//#define penToggleButton 12 // pen up/down button
+	//#define motorsButton 4 // motors enable button
+#endif
 
 //-----------------------------------------------------------------------------------------------------------
 
