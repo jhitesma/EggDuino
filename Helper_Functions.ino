@@ -9,15 +9,21 @@ void initHardware(){
   #endif
   
 	loadPenPosFromEE();
-
-	pinMode(enableRotMotor, OUTPUT);
-	pinMode(enablePenMotor, OUTPUT);
-	pinMode(engraverPin, OUTPUT);
-
-	rotMotor.setMaxSpeed(2000.0);
-	rotMotor.setAcceleration(10000.0);
-	penMotor.setMaxSpeed(2000.0);
-	penMotor.setAcceleration(10000.0);
+#ifdef BOARD_ULN2003
+  pinMode(engraverPin, OUTPUT);
+  rotMotor.setMaxSpeed(800.0);
+  rotMotor.setAcceleration(300.0);
+  penMotor.setMaxSpeed(800.0);
+  penMotor.setAcceleration(300.0);
+#else
+  pinMode(enableRotMotor, OUTPUT);
+  pinMode(enablePenMotor, OUTPUT);
+  pinMode(engraverPin, OUTPUT);
+  rotMotor.setMaxSpeed(2000.0);
+  rotMotor.setAcceleration(10000.0);
+  penMotor.setMaxSpeed(2000.0);
+  penMotor.setAcceleration(10000.0);
+#endif
 	motorsOff();
 	penServo.attach(servoPin);
 	penServo.write(penState);
@@ -48,15 +54,22 @@ void sendError(){
 }
 
 void motorsOff() {
-	digitalWrite(enableRotMotor, HIGH);
-	digitalWrite(enablePenMotor, HIGH);
+#ifdef BOARD_ULN2003
+  for (byte i= 2; i < 10; i++)
+    digitalWrite(i, LOW);
+#else
+  digitalWrite(enableRotMotor, HIGH);
+  digitalWrite(enablePenMotor, HIGH);
+#endif
 	motorsEnabled = 0;
 }
 
 void motorsOn() {
-	digitalWrite(enableRotMotor, LOW) ;
-	digitalWrite(enablePenMotor, LOW) ;
-	motorsEnabled = 1;
+#ifndef BOARD_ULN2003
+  digitalWrite(enableRotMotor, LOW) ;
+  digitalWrite(enablePenMotor, LOW) ;
+#endif
+  motorsEnabled = 1;
 }
 
 void toggleMotors() {
